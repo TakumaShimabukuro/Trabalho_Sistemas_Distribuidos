@@ -1,12 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podutos</title>
-</head>
-<body>
-    
-</body>
-<script src="./produtos.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Produtos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pedidos.html">Pedidos</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="produtos.html">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clientes.html">Clientes</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Produtos</h1>
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody id='tblProdutos'>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </main>
+
+    <footer class="container">
+        <p>&copy; Made With <3</p>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        carregarProdutos();
+      });
+
+      function carregarProdutos() {
+        fetch('https://localhost:5001/api/Produto', {
+            method : 'GET'
+        })
+            .then(response => response.json())
+            .then((value) => value.map(function (v) { 
+                return `<tr>
+                    <th scope='row'>${v.id}</tj>
+                    <td>${v.nome}</td>
+                    <td>${v.quantidade}</td>
+                    <td>R$: ${v.valor}</td>
+                    <td>${v.status}</td>
+                </tr>`;
+            }))
+            .then((body) => $('#tblProdutos').empty().append(body));
+      }
+    </script>
+  </body>
 </html>
